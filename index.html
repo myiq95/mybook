@@ -36,7 +36,7 @@ svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke
 .bi{flex:1;min-width:0}.bi b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font:600 16px/1.4 var(--serif);word-break:keep-all}
 .bi small{color:var(--mut);font-size:12px}.bi u{display:block;height:3px;background:var(--ln);border-radius:2px;margin-top:6px}.bi s{display:block;height:100%;background:var(--ac);border-radius:2px}
 .em{text-align:center;color:var(--mut);padding:60px 0;font-family:var(--serif)}
-#doc{max-width:680px;margin:auto;padding:calc(env(safe-area-inset-top) + 56px) 24px calc(env(safe-area-inset-bottom) + 60px);font-family:var(--ff);font-size:var(--fs);letter-spacing:var(--ls);line-height:var(--lh);word-break:keep-all;overflow-wrap:break-word;font-weight:var(--bw)}
+#doc{max-width:680px;margin:auto;padding:calc(env(safe-area-inset-top) + 56px) 24px calc(env(safe-area-inset-bottom) + 30px);font-family:var(--ff);font-size:var(--fs);letter-spacing:var(--ls);line-height:var(--lh);word-break:keep-all;overflow-wrap:break-word;font-weight:var(--bw)}
 #doc b{font-weight:800}
 #doc>*{margin:0}
 .t{text-align:center;font:700 1.7em/1.4 var(--serif);margin:1.6em 0 2em!important}.t::after{content:'';display:block;width:56px;height:2px;background:var(--ac);margin:.9em auto 0}
@@ -69,9 +69,8 @@ svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke
 <div id="ll"><div class="tabs"><button class="on" onclick="tab(0)">읽는 중</button><button onclick="tab(1)">완독</button></div><div id="ls"></div></div></section>
 
 <section class="scr" id="rd">
-<div class="bar top" id="tb"><button class="ib" onclick="closeRd()" id="i5"></button><button class="ib" onclick="nt()" id="i6"></button></div>
-<div id="doc"></div>
-<div class="bar bot" id="bb"><button class="ib" onclick="op2('tc')" id="i7"></button><button class="ib" onclick="tts()" id="i8"></button><button class="ib" onclick="op2('st')" id="i9"></button></div></section>
+<div class="bar top" id="tb"><button class="ib" onclick="closeRd()" id="i5"></button><button class="ib" onclick="op2('tc')" id="i7"></button><button class="ib" onclick="tts()" id="i8"></button><button class="ib" onclick="op2('st')" id="i9"></button><button class="ib" onclick="nt()" id="i6"></button></div>
+<div id="doc"></div><div id="bb" hidden></div></section>
 
 <div class="bd" id="bd" onclick="op2()"></div>
 <div class="sh" id="pt"><input type="text" id="pti" placeholder="제목"><textarea id="ptx" placeholder="여기에 글을 붙여넣으세요"></textarea><button class="go" onclick="paste()">서재에 담고 읽기</button></div>
