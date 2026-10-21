@@ -11,18 +11,18 @@ body{--bg:#0f1218;--fg:#d9d6cc;--mut:#8a8f9c;--ac:#c9a86a;--cd:#171b24;--ln:#2a3
 body[data-th=light]{--bg:#f6f2ea;--fg:#2a2823;--mut:#8b8577;--ac:#9a6b2f;--cd:#fffdf8;--ln:#e4ddcf;--bar:rgba(246,242,234,.8)}
 body[data-th=sepia]{--bg:#eadcbc;--fg:#43362a;--mut:#8a7658;--ac:#8a4b1f;--cd:#f4e8cd;--ln:#d8c69f;--bar:rgba(234,220,188,.8)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;min-height:-webkit-fill-available;background:var(--bg);color:var(--fg);font-family:var(--ff);overscroll-behavior:none}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ff);overscroll-behavior:none}
 button{font:inherit;color:inherit;cursor:pointer}
 svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.scr{position:fixed;top:0;left:0;right:0;bottom:0;display:none;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--bg) no-repeat center bottom/cover}
+.scr{display:none;min-height:100vh}#art{position:fixed;top:0;left:0;right:0;bottom:-120px;z-index:-1;background:var(--bg) no-repeat center bottom/cover}
 .scr.on{display:block}
-#home{background-image:var(--a1)}#lib{background-image:var(--a2)}#rd{background-image:var(--a3);}
+body[data-s=home] #art{background-image:var(--a1)}body[data-s=lib] #art{background-image:var(--a2)}body[data-s=rd] #art{background-image:var(--a3)}
 .bar{position:fixed;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(env(safe-area-inset-top) + 2px) 12px 4px;background:var(--bar);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:transform .3s}
 .bar.top{top:0}.bar.bot{bottom:0;padding:4px 12px calc(env(safe-area-inset-bottom) + 2px);justify-content:space-around;background:linear-gradient(transparent,var(--bar) 55%)}
 .bar.top.hide{transform:translateY(-110%)}.bar.bot.hide{transform:translateY(110%)}
 .ib{width:46px;height:46px;border:0;background:none;display:grid;place-items:center;border-radius:50%}
 .ib:active{background:var(--ln)}
-.hm{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:calc(env(safe-area-inset-top) + 30px) 32px calc(env(safe-area-inset-bottom) + 40px);text-align:center}
+.hm{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:calc(env(safe-area-inset-top) + 30px) 32px calc(env(safe-area-inset-bottom) + 40px);text-align:center}
 .hm h1{font:700 54px/1.1 var(--serif);letter-spacing:.12em;margin:14px 0 0;text-indent:.12em}
 .hm p{margin:0 0 22px;color:var(--mut);font:15px/1.7 var(--serif);letter-spacing:.06em}
 .mk{width:84px;height:84px;border-radius:22px;background:linear-gradient(145deg,#1d2638,#0b0e14);border:1px solid var(--ln);display:grid;place-items:center;color:#c9a86a;box-shadow:0 12px 40px rgba(0,0,0,.35)}.mk svg{width:44px;height:44px}
@@ -55,7 +55,7 @@ svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke
 .toc div{padding:13px 4px;border-bottom:1px solid var(--ln);font:15px/1.4 var(--serif)}.toc .on{color:var(--ac);font-weight:700}
 .go{width:100%;padding:14px;border:0;border-radius:14px;background:var(--ac);color:var(--bg);font-weight:700;font-size:16px}
 #ld{position:fixed;inset:0;z-index:20;display:none;place-items:center;background:rgba(0,0,0,.6);color:#fff}
-</style></head><body data-th="dark">
+</style></head><body data-th="dark" data-s="home"><div id="art"></div>
 
 <section class="scr on" id="home"><div class="hm">
 <div class="mk" id="mk"></div><h1>책결</h1><p>조용히 스미는 독서의 시간</p>
@@ -117,7 +117,7 @@ const nt=()=>{S.th=S.th=='dark'?'light':'dark';apply()};
 function voices(){const v=speechSynthesis.getVoices().filter(v=>/^ko/i.test(v.lang));$('#vo').innerHTML=(v.length?v:speechSynthesis.getVoices()).map(x=>`<option value="${e(x.voiceURI)}" ${x.voiceURI==S.vo?'selected':''}>${e(x.name)}</option>`).join('')}
 if('speechSynthesis' in window){voices();speechSynthesis.onvoiceschanged=voices}
 /* 화면·시트 */
-function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id==id));op2();if(id!='rd')stopT();if(id=='lib')lb();scrollTo(0,0)}
+function show(id){document.body.dataset.s=id;document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id==id));op2();if(id!='rd')stopT();if(id=='lib')lb();scrollTo(0,0)}
 function op2(id){document.querySelectorAll('.sh').forEach(s=>s.classList.toggle('on',s.id==id));$('#bd').classList.toggle('on',!!id);if(id=='tc')tocUI()}
 /* DB */
 let db;const idb=new Promise(r=>{const q=indexedDB.open('ck',1);q.onupgradeneeded=()=>{q.result.createObjectStore('m',{keyPath:'id'});q.result.createObjectStore('x')};q.onsuccess=()=>{db=q.result;r()}});
@@ -147,14 +147,14 @@ let tb=0;function tab(n){tb=n;document.querySelectorAll('.tabs button').forEach(
 async function lb(){const L=((await T('m','readonly',s=>s.getAll()))||[]).filter(b=>!!b.done==!!tb).sort((a,b)=>b.at-a.at);$('#ls').innerHTML=L.length?L.map(b=>`<div class="bk" onclick="op('${b.id}')"><i class="cv">${e(b.title[0]||'책')}</i><div class="bi"><b>${e(b.title)}</b><small>${Math.round(b.pr*100)}%</small><u><s style="width:${b.pr*100}%"></s></u></div><button class="ib" onclick="event.stopPropagation();rm('${b.id}')">${ic('tr')}</button></div>`).join(''):'<p class="em">'+(tb?'다 읽은 책이 아직 없어요':'파일을 열어 첫 책을 담아보세요')+'</p>'}
 async function rm(id){if(!confirm('서재에서 삭제할까요?'))return;await T('m','readwrite',s=>s.delete(id));await T('x','readwrite',s=>s.delete(id));lb()}
 /* 리더 */
-const fm=b=>{const t=e(b.x);return b.t=='p'||b.t=='q'?t.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>'):t.replace(/\*\*/g,'')};let bk,B=[],toc=[],sc=$('#rd'),doc=$('#doc');
+const fm=b=>{const t=e(b.x);return b.t=='p'||b.t=='q'?t.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>'):t.replace(/\*\*/g,'')};let bk,B=[],toc=[],sc=document.scrollingElement,doc=$('#doc');
 async function op(id){const m=await T('m','readonly',s=>s.get(id)),x=await T('x','readonly',s=>s.get(id));if(!m||!x)return;bk=m;B=x.B;toc=x.toc;doc.innerHTML=B.map((b,i)=>b.t=='q'?`<blockquote class="q">${fm(b)}</blockquote>`:`<div class="${b.t}">${fm(b)}</div>`).join('');show('rd');$('#tb').classList.remove('hide');$('#bb').classList.remove('hide');setTimeout(()=>{$('#tb').classList.add('hide');$('#bb').classList.add('hide')},2200);requestAnimationFrame(()=>{sc.scrollTop=m.pos?doc.children[Math.min(m.pos,B.length-1)].offsetTop-90:0;lastY=sc.scrollTop})}
 function cur(){const y=sc.scrollTop+90;let a=0,b=doc.children.length-1;while(a<b){const m=(a+b)>>1,c=doc.children[m];c.offsetTop+c.offsetHeight<y?a=m+1:b=m}return a}
 let lastY=0,tk=0,sv;
-sc.addEventListener('scroll',()=>{if(tk)return;tk=requestAnimationFrame(()=>{tk=0;const y=sc.scrollTop,d=y-lastY;if(Math.abs(d)>8){const h=d>0&&y>60;$('#tb').classList.toggle('hide',h);$('#bb').classList.toggle('hide',h);lastY=y}clearTimeout(sv);sv=setTimeout(save,700)})},{passive:true});
+addEventListener('scroll',()=>{if(tk||bk===null||!$('#rd').classList.contains('on'))return;tk=requestAnimationFrame(()=>{tk=0;const y=sc.scrollTop,d=y-lastY;if(Math.abs(d)>8){const h=d>0&&y>60;$('#tb').classList.toggle('hide',h);$('#bb').classList.toggle('hide',h);lastY=y}clearTimeout(sv);sv=setTimeout(save,700)})},{passive:true});
 async function save(){if(!bk||!B.length)return;bk.pos=cur();const mx=sc.scrollHeight-sc.clientHeight;bk.pr=mx>0?Math.min(1,sc.scrollTop/mx):1;if(bk.pr>.985)bk.done=true;bk.at=Date.now();await T('m','readwrite',s=>s.put(bk))}
 doc.onclick=()=>{const h=$('#tb').classList.contains('hide');$('#tb').classList.toggle('hide',!h);$('#bb').classList.toggle('hide',!h)};
-async function closeRd(){await save();show('lib')}
+async function closeRd(){clearTimeout(sv);await save();show('lib')}
 function tocUI(){const c=cur();let a=-1;toc.forEach((t,k)=>{if(t.i<=c)a=k});$('#tc').innerHTML=toc.length?toc.map((t,k)=>`<div class="${k==a?'on':''}" onclick="go(${t.i})">${e(t.l)}</div>`).join(''):'<p class="em">목차가 없습니다</p>'}
 function go(i){op2();sc.scrollTop=doc.children[i].offsetTop-90}
 /* 시스템 TTS */
