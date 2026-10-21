@@ -4,21 +4,21 @@
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="책결"><meta name="theme-color" content="#0f1218">
-<title>책결</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@400;700&family=Nanum+Gothic:wght@400;700;800&display=swap"><link rel="manifest" id="mf"><link rel="apple-touch-icon" id="ai">
+<title>책결</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@400;700&family=Nanum+Gothic:wght@400;700;800&display=swap"><link rel="apple-touch-icon" id="ai">
 <style>
 :root{--fs:19px;--ls:0px;--lh:1.9;--ff:-apple-system,'Apple SD Gothic Neo',sans-serif;--bw:400;--serif:'Nanum Myeongjo','Noto Serif KR','AppleMyungjo','Batang',serif}
 body{--bg:#0f1218;--fg:#d9d6cc;--mut:#8a8f9c;--ac:#c9a86a;--cd:#171b24;--ln:#2a3140;--bar:rgba(15,18,24,.78)}
 body[data-th=light]{--bg:#f6f2ea;--fg:#2a2823;--mut:#8b8577;--ac:#9a6b2f;--cd:#fffdf8;--ln:#e4ddcf;--bar:rgba(246,242,234,.8)}
 body[data-th=sepia]{--bg:#eadcbc;--fg:#43362a;--mut:#8a7658;--ac:#8a4b1f;--cd:#f4e8cd;--ln:#d8c69f;--bar:rgba(234,220,188,.8)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;min-height:-webkit-fill-available;background:var(--bg);color:var(--fg);font-family:var(--ff);overscroll-behavior:none}
+html,body{margin:0;height:var(--H,100%);background:var(--bg);color:var(--fg);font-family:var(--ff);overscroll-behavior:none}
 button{font:inherit;color:inherit;cursor:pointer}
 svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.scr{position:fixed;top:0;left:0;right:0;bottom:0;height:100vh;height:100dvh;display:none;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--bg) no-repeat center bottom/cover}
+.scr{position:fixed;top:0;left:0;right:0;bottom:0;height:var(--H,100vh);display:none;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--bg) no-repeat center bottom/cover}
 .scr.on{display:block}
 #home{background-image:var(--a1)}#lib{background-image:var(--a2)}#rd{background-image:var(--a3);}
-.bar{position:fixed;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(env(safe-area-inset-top) + 6px) 12px 8px;background:var(--bar);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:transform .3s}
-.bar.top{top:0}.bar.bot{bottom:0;padding:4px 12px calc(env(safe-area-inset-bottom) + 2px);justify-content:space-around;background:linear-gradient(transparent,var(--bar) 55%)}
+.bar{position:fixed;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(env(safe-area-inset-top) + 2px) 12px 4px;background:var(--bar);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:transform .3s}
+.bar.top{top:0}.bar.bot{bottom:auto;height:calc(54px + env(safe-area-inset-bottom));top:calc(var(--H,100vh) - 54px - env(safe-area-inset-bottom));padding:4px 12px calc(env(safe-area-inset-bottom) + 2px);justify-content:space-around;background:linear-gradient(transparent,var(--bar) 55%)}
 .bar.top.hide{transform:translateY(-110%)}.bar.bot.hide{transform:translateY(110%)}
 .ib{width:46px;height:46px;border:0;background:none;display:grid;place-items:center;border-radius:50%}
 .ib:active{background:var(--ln)}
@@ -104,7 +104,8 @@ R.setProperty('--a3',bg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40
 /* 아이콘/매니페스트 */
 function mkIcon(n){const c=document.createElement('canvas');c.width=c.height=n;const g=c.getContext('2d'),gr=g.createLinearGradient(0,0,n,n);gr.addColorStop(0,'#1d2638');gr.addColorStop(1,'#0b0e14');g.fillStyle=gr;g.fillRect(0,0,n,n);g.strokeStyle=g.fillStyle='#c9a86a';g.lineWidth=n*.035;g.lineJoin=g.lineCap='round';g.beginPath();g.moveTo(.5*n,.4*n);g.quadraticCurveTo(.34*n,.32*n,.18*n,.36*n);g.lineTo(.18*n,.74*n);g.quadraticCurveTo(.34*n,.7*n,.5*n,.78*n);g.quadraticCurveTo(.66*n,.7*n,.82*n,.74*n);g.lineTo(.82*n,.36*n);g.quadraticCurveTo(.66*n,.32*n,.5*n,.4*n);g.lineTo(.5*n,.78*n);g.stroke();g.beginPath();g.arc(.5*n,.22*n,.045*n,0,7);g.fill();return c.toDataURL()}
 $('#ai').href=mkIcon(180);
-try{const u=location.origin+location.pathname;$('#mf').href=URL.createObjectURL(new Blob([JSON.stringify({name:'책결',short_name:'책결',start_url:u,scope:u,display:'standalone',background_color:'#0f1218',theme_color:'#0f1218',icons:[{src:mkIcon(192),sizes:'192x192',type:'image/png'},{src:mkIcon(512),sizes:'512x512',type:'image/png'}]})],{type:'application/manifest+json'}))}catch(_){}
+function fit(){const p=innerHeight>=innerWidth,sh=p?Math.max(screen.height,screen.width):Math.min(screen.height,screen.width),st=navigator.standalone||matchMedia('(display-mode:standalone)').matches;R.setProperty('--H',(st?Math.max(innerHeight,sh):innerHeight)+'px')}
+addEventListener('resize',fit);addEventListener('orientationchange',()=>setTimeout(fit,250));fit();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 /* 설정 */
 const FF={sys:"-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif",myeong:"'Nanum Myeongjo','Noto Serif KR','AppleMyungjo','Batang',serif",gothic:"'Apple SD Gothic Neo','Malgun Gothic',sans-serif",round:"'Nanum Gothic','Apple SD Gothic Neo',sans-serif"};
